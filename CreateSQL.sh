@@ -9,11 +9,9 @@ database="database-$randomIdentifier"
 login="asaf"
 password="bogdanbogdan1!"
 
-#Configure my ip
-myIp=`curl -4 ifconfig.co`
 
-startIP=$myIp
-endIP=$myIp
+startIP=0.0.0.0
+endIP=255.255.255.255
 
 #TODO: remove echo "Creating $resource..."
 #az group create --name $resource --location "$location"
@@ -35,9 +33,16 @@ CREATE DATABASE demodatabase;
 #az sql db create --resource-group $resource --server $server --name "$database" --sample-name AdventureWorksLT --edition GeneralPurpose --family Gen5 --capacity 2 --zone-redundant false
 USE demodatabase;
 
+CREATE TABLE Tblcities (
+	cityId INTEGER PRIMARY KEY, 
+	name VARCHAR(50)
+);
+
+INSERT INTO Tblcities (cityId, name) VALUES (1,'Hadera');
+
 
     CREATE TABLE Tblpersonstest (
-        id serial PRIMARY KEY,
+        id INTEGER PRIMARY KEY,
         FOREIGN KEY (cityId) REFERENCES Tblcities (cityId),
         firstname VARCHAR(50), 
         lastname VARCHAR(50),
@@ -47,11 +52,4 @@ USE demodatabase;
         cityId INTEGER
     );
 
-INSERT INTO Tblpersons (id, firstname, lastname,email,password,salary,cityid) VALUES (1, 'Asaf', 'Amir','Asaf@gmail.com','123',120,1); 
-
-CREATE TABLE Tblcities (
-	cityId serial PRIMARY KEY, 
-	name VARCHAR(50)
-);
-
-INSERT INTO Tblcities (cityId, name) VALUES (1,'Hadera');
+INSERT INTO Tblpersonstest (id, firstname, lastname,email,password,salary,cityid) VALUES (1, 'Asaf', 'Amir','Asaf@gmail.com','123',120,1); 
